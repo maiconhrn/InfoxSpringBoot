@@ -1,7 +1,7 @@
-package br.com.infox.manipulators.builders;
+package br.com.infox.models.builders;
 
-import br.com.infox.entities.Role;
-import br.com.infox.entities.User;
+import br.com.infox.models.Role;
+import br.com.infox.models.User;
 
 import java.util.List;
 

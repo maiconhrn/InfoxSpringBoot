@@ -1,4 +1,4 @@
-package br.com.infox.webservice.model.dto;
+package br.com.infox.webservice.dto;
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ public class PersonDTO {
     private String firstName;
     private String lastName;
     private String cpf;
-    private Date birtyDate;
+    private Date birthDate;
 
     public Long getId() {
         return id;
@@ -45,11 +45,11 @@ public class PersonDTO {
         this.cpf = cpf;
     }
 
-    public Date getBirtyDate() {
-        return birtyDate;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirtyDate(Date birtyDate) {
-        this.birtyDate = birtyDate;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 }

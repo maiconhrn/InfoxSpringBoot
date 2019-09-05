@@ -1,10 +1,10 @@
-package br.com.infox.manipulators.builders;
+package br.com.infox.models.builders;
 
-import br.com.infox.entities.Client;
-import br.com.infox.entities.ServiceOrder;
-import br.com.infox.entities.User;
-import br.com.infox.type.ServiceOrderType;
-import br.com.infox.type.ServiceOrderSituationType;
+import br.com.infox.models.Client;
+import br.com.infox.models.ServiceOrder;
+import br.com.infox.models.User;
+import br.com.infox.models.types.ServiceOrderType;
+import br.com.infox.models.types.ServiceOrderSituationType;
 
 import java.util.Date;
 

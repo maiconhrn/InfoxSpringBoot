@@ -1,11 +1,10 @@
 package br.com.infox.service;
 
 import br.com.infox.displaykey.DisplayKey;
-import br.com.infox.entities.Role;
-import br.com.infox.entities.User;
 import br.com.infox.exceptions.UserException;
+import br.com.infox.models.Role;
+import br.com.infox.models.User;
 import br.com.infox.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +17,11 @@ import java.util.List;
 @Transactional
 public class UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() ->

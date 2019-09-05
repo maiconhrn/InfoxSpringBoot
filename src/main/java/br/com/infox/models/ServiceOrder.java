@@ -1,7 +1,7 @@
-package br.com.infox.entities;
+package br.com.infox.models;
 
-import br.com.infox.type.ServiceOrderType;
-import br.com.infox.type.ServiceOrderSituationType;
+import br.com.infox.models.types.ServiceOrderSituationType;
+import br.com.infox.models.types.ServiceOrderType;
 import org.dom4j.tree.AbstractEntity;
 
 import javax.persistence.*;
@@ -10,12 +10,11 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@SequenceGenerator(name = "service_order_seq", sequenceName = "service_order_seq", initialValue = 1, allocationSize = 1)
 @Table(name = "service_order")
 public class ServiceOrder extends AbstractEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "service_order_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "creation_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

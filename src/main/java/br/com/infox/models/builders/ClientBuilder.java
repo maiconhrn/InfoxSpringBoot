@@ -1,8 +1,8 @@
-package br.com.infox.manipulators.builders;
+package br.com.infox.models.builders;
 
-import br.com.infox.entities.Address;
-import br.com.infox.entities.Client;
-import br.com.infox.entities.ServiceOrder;
+import br.com.infox.models.Address;
+import br.com.infox.models.Client;
+import br.com.infox.models.ServiceOrder;
 
 import java.util.Date;
 import java.util.List;
@@ -76,7 +76,7 @@ public final class ClientBuilder {
         client.setServiceOrders(serviceOrders);
         client.setLastName(lastName);
         client.setCpf(cpf);
-        client.setBirtyDate(birtyDate);
+        client.setBirthDate(birtyDate);
         return client;
     }
 }

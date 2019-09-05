@@ -1,4 +1,4 @@
-package br.com.infox.entities;
+package br.com.infox.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,11 +10,10 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "role")
-@SequenceGenerator(name = "role_seq", sequenceName = "role_seq", initialValue = 1, allocationSize = 1)
 public class Role implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(nullable = false)
     private String name;

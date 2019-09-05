@@ -1,7 +1,7 @@
-package br.com.infox.webservice.util;
+package br.com.infox.util;
 
-import br.com.infox.entities.ServiceOrder;
-import br.com.infox.webservice.model.dto.ServiceOrderDTO;
+import br.com.infox.models.ServiceOrder;
+import br.com.infox.webservice.dto.ServiceOrderDTO;
 
 /**
  * @author Maicon

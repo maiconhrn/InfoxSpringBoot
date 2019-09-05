@@ -1,6 +1,6 @@
-package br.com.infox.manipulators.builders;
+package br.com.infox.models.builders;
 
-import br.com.infox.entities.Address;
+import br.com.infox.models.Address;
 
 /**
  * @author Maicon

@@ -1,9 +1,9 @@
-package br.com.infox.webservice.util;
+package br.com.infox.util;
 
-import br.com.infox.entities.Role;
-import br.com.infox.entities.User;
-import br.com.infox.webservice.model.dto.RoleDTO;
-import br.com.infox.webservice.model.dto.UserDTO;
+import br.com.infox.models.Role;
+import br.com.infox.models.User;
+import br.com.infox.webservice.dto.RoleDTO;
+import br.com.infox.webservice.dto.UserDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,7 @@ public class UserUtil {
         userDTO.setPassword(user.getPassword());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
-        userDTO.setBirtyDate(user.getBirtyDate());
+        userDTO.setBirthDate(user.getBirthDate());
 
         return userDTO;
     }
@@ -67,7 +67,7 @@ public class UserUtil {
         user.setPassword(userDTO.getPassword());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
-        user.setBirtyDate(userDTO.getBirtyDate());
+        user.setBirthDate(userDTO.getBirthDate());
 
         return user;
     }

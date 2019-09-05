@@ -1,12 +1,11 @@
 package br.com.infox.webservice.controller;
 
 import br.com.infox.displaykey.DisplayKey;
-import br.com.infox.entities.User;
 import br.com.infox.exceptions.UserException;
+import br.com.infox.models.User;
 import br.com.infox.repository.UserRepository;
-import br.com.infox.webservice.model.dto.UserDTO;
-import br.com.infox.webservice.util.UserUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.infox.util.UserUtil;
+import br.com.infox.webservice.dto.UserDTO;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +17,15 @@ import java.util.List;
  * @author Maicon
  */
 @RestController
-@RequestMapping(value = "/api/user")
+@RequestMapping(value = "/users")
 @Transactional
 public class UserController {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     private List<UserDTO> toDto(List<User> users) {
         List<UserDTO> usersDTO = new ArrayList<>();
@@ -32,36 +34,25 @@ public class UserController {
         return usersDTO;
     }
 
-    private UserDTO save(UserDTO user) {
-        User u = new User();
+    private UserDTO save(User user) {
         if (user != null) {
-            u = UserUtil.fill(user);
             try {
-                u = userRepository.save(u);
+                user = userRepository.save(user);
             } catch (Exception e) {
                 throw new UserException(DisplayKey.get("infox.user.add.error") + e.getMessage());
             }
+            return UserUtil.toDto(user);
         }
-        return UserUtil.toDto(u);
+
+        return new UserDTO();
     }
 
-    @GetMapping("/list")
+    @GetMapping("/")
     public List<UserDTO> listUsers() {
         List<User> users = userRepository.findAll();
 
         if (users.isEmpty()) {
             throw new UserException(DisplayKey.get("infox.user.noneRegistred"));
-        }
-
-        return toDto(users);
-    }
-
-    @GetMapping("/listByFirstName")
-    public List<UserDTO> getUsuarioWhereNameLike(@RequestParam("firstName") String firstName) {
-        List<User> users = userRepository.findAllByNomeIsLike(firstName);
-
-        if (users.isEmpty()) {
-            throw new UserException(DisplayKey.get("infox.user.noneRegistredWithName", firstName));
         }
 
         return toDto(users);
@@ -78,17 +69,28 @@ public class UserController {
         return UserUtil.toDto(user);
     }
 
-    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public UserDTO registerUser(@RequestBody UserDTO user) {
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public UserDTO registerUser(@RequestBody UserDTO userDTO) {
+        if (userDTO == null) {
+            throw new UserException("Usuário nulo");
+        }
+
+        User user = UserUtil.fill(userDTO);
+        user.setHashPassword(userDTO.getPassword());
         return save(user);
     }
 
-    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public UserDTO updateUser(@RequestBody UserDTO user) {
-        if (user.getId() == null || user.getId() < 1) {
-            throw new UserException(DisplayKey.get("infox.user.update.id.error", user.getId()));
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public UserDTO updateUser(@PathVariable("id") Long id, @RequestBody UserDTO userDTO) {
+        if (id == null || id < 1) {
+            throw new UserException(DisplayKey.get("infox.user.update.id.error", id));
         }
 
+        if (userDTO == null) {
+            throw new UserException("Usuário nulo");
+        }
+
+        User user = UserUtil.fill(userDTO);
         return save(user);
     }
 }

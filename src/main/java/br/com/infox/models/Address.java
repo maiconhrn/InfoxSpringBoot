@@ -1,4 +1,4 @@
-package br.com.infox.entities;
+package br.com.infox.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,11 +8,11 @@ import java.util.Objects;
  * @author Maicon
  */
 @Entity
-@SequenceGenerator(name = "address_seq", sequenceName = "address_seq", initialValue = 1, allocationSize = 1)
 @Table(name = "address")
 public class Address implements Serializable {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(length = 50, nullable = false)
     private String country;

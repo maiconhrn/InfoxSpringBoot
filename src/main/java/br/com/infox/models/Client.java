@@ -1,4 +1,4 @@
-package br.com.infox.entities;
+package br.com.infox.models;
 
 import javax.persistence.*;
 import java.io.Serializable;

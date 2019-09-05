@@ -1,6 +1,6 @@
 package br.com.infox.repository;
 
-import br.com.infox.entities.Address;
+import br.com.infox.models.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

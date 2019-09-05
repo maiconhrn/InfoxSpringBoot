@@ -1,8 +1,8 @@
-package br.com.infox.manipulators.builders;
+package br.com.infox.models.builders;
 
-import br.com.infox.entities.Role;
-import br.com.infox.entities.ServiceOrder;
-import br.com.infox.entities.User;
+import br.com.infox.models.Role;
+import br.com.infox.models.ServiceOrder;
+import br.com.infox.models.User;
 
 import java.util.Date;
 import java.util.List;
@@ -18,7 +18,7 @@ public final class UserBuilder {
     private String lastName;
     private String password;
     private String email;
-    private Date birtyDate;
+    private Date birthDate;
     private List<ServiceOrder> serviceOrders;
     private List<Role> roles;
 
@@ -64,8 +64,8 @@ public final class UserBuilder {
         return this;
     }
 
-    public UserBuilder withBirtyDate(Date birtyDate) {
-        this.birtyDate = birtyDate;
+    public UserBuilder withBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
         return this;
     }
 
@@ -88,7 +88,7 @@ public final class UserBuilder {
         user.setLastName(lastName);
         user.setPassword(password);
         user.setEmail(email);
-        user.setBirtyDate(birtyDate);
+        user.setBirthDate(birthDate);
         user.setServiceOrders(serviceOrders);
         user.setRoles(roles);
         return user;

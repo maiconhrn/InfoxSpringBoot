@@ -1,4 +1,4 @@
-package br.com.infox.type;
+package br.com.infox.models.types;
 
 /**
  * @author Maicon

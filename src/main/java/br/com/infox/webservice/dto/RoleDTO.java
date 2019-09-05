@@ -1,4 +1,4 @@
-package br.com.infox.webservice.model.dto;
+package br.com.infox.webservice.dto;
 
 /**
  * @author Maicon

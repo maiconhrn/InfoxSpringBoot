@@ -1,6 +1,6 @@
 package br.com.infox.repository;
 
-import br.com.infox.entities.ServiceOrder;
+import br.com.infox.models.ServiceOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

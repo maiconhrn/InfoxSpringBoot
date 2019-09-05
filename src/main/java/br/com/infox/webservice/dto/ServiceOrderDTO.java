@@ -1,7 +1,7 @@
-package br.com.infox.webservice.model.dto;
+package br.com.infox.webservice.dto;
 
-import br.com.infox.type.ServiceOrderType;
-import br.com.infox.type.ServiceOrderSituationType;
+import br.com.infox.models.types.ServiceOrderType;
+import br.com.infox.models.types.ServiceOrderSituationType;
 
 import java.util.Date;
 

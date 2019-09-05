@@ -1,4 +1,4 @@
-package br.com.infox.entities;
+package br.com.infox.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,8 +11,10 @@ public class User extends Person implements Serializable {
 
     @Column(length = 30, unique = true, nullable = false)
     private String login;
-    @Column(nullable = false)
+    @Transient
     private String password;
+    @Column(nullable = false)
+    private String hashPassword;
     @Column(nullable = false)
     private String email;
     @OneToMany(mappedBy = "technician", cascade = CascadeType.ALL)
@@ -41,6 +43,14 @@ public class User extends Person implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getHashPassword() {
+        return hashPassword;
+    }
+
+    public void setHashPassword(String hashPassword) {
+        this.hashPassword = hashPassword;
     }
 
     public String getEmail() {

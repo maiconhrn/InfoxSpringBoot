@@ -1,8 +1,8 @@
 package br.com.infox.service;
 
-import br.com.infox.entities.Role;
-import br.com.infox.entities.User;
-import br.com.infox.manipulators.builders.RoleBuilder;
+import br.com.infox.models.Role;
+import br.com.infox.models.User;
+import br.com.infox.models.builders.RoleBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

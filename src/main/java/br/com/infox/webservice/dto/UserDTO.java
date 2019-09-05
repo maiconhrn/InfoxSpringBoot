@@ -1,6 +1,4 @@
-package br.com.infox.webservice.model.dto;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+package br.com.infox.webservice.dto;
 
 /**
  * @author Maicon
@@ -8,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class UserDTO extends PersonDTO {
 
     private String login;
-    @JsonIgnore
     private String password;
     private String email;
 
