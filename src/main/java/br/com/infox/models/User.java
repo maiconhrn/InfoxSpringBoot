@@ -10,7 +10,7 @@ import java.util.Objects;
 public class User extends Person implements Serializable {
 
     @Column(length = 30, unique = true, nullable = false)
-    private String login;
+    private String username;
     @Transient
     private String password;
     @Column(nullable = false)
@@ -29,12 +29,12 @@ public class User extends Person implements Serializable {
             })
     private List<Role> roles;
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -83,7 +83,7 @@ public class User extends Person implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         User user = (User) o;
-        return Objects.equals(login, user.login) &&
+        return Objects.equals(username, user.username) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(serviceOrders, user.serviceOrders) &&
@@ -92,6 +92,6 @@ public class User extends Person implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), login, password, email, serviceOrders, roles);
+        return Objects.hash(super.hashCode(), username, password, email, serviceOrders, roles);
     }
 }

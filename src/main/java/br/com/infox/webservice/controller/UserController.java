@@ -4,6 +4,7 @@ import br.com.infox.displaykey.DisplayKey;
 import br.com.infox.exceptions.UserException;
 import br.com.infox.models.User;
 import br.com.infox.repository.UserRepository;
+import br.com.infox.service.UserService;
 import br.com.infox.util.UserUtil;
 import br.com.infox.webservice.dto.UserDTO;
 import org.springframework.http.MediaType;
@@ -21,9 +22,11 @@ import java.util.List;
 @Transactional
 public class UserController {
 
+    private final UserService userService;
     private final UserRepository userRepository;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserService userService, UserRepository userRepository) {
+        this.userService = userService;
         this.userRepository = userRepository;
     }
 
@@ -37,32 +40,28 @@ public class UserController {
     private UserDTO save(User user) {
         if (user != null) {
             try {
-                user = userRepository.save(user);
+                user = userService.saveUser(user);
+                return UserUtil.toDto(user);
             } catch (Exception e) {
                 throw new UserException(DisplayKey.get("infox.user.add.error") + e.getMessage());
             }
-            return UserUtil.toDto(user);
         }
 
         return new UserDTO();
     }
 
     @GetMapping("/")
-    public List<UserDTO> listUsers() {
+    public List<UserDTO> listAll() {
         List<User> users = userRepository.findAll();
 
-        if (users.isEmpty()) {
-            throw new UserException(DisplayKey.get("infox.user.noneRegistred"));
-        }
-
-        return toDto(users);
+        return (users != null && !users.isEmpty()) ? toDto(users) : new ArrayList<>();
     }
 
     @GetMapping("/{id}")
-    public UserDTO getUsuarioByID(@PathVariable("id") Long id) {
-        User user = userRepository.findById(id).orElse(new User());
+    public UserDTO getByID(@PathVariable("id") Long id) {
+        User user = userService.findById(id);
 
-        if (user.getId() == null) {
+        if (user == null) {
             throw new UserException(DisplayKey.get("infox.user.noneRegistredWithID", id));
         }
 
@@ -70,27 +69,28 @@ public class UserController {
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public UserDTO registerUser(@RequestBody UserDTO userDTO) {
+    public UserDTO register(@RequestBody UserDTO userDTO) {
         if (userDTO == null) {
             throw new UserException("Usuário nulo");
         }
 
         User user = UserUtil.fill(userDTO);
-        user.setHashPassword(userDTO.getPassword());
         return save(user);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public UserDTO updateUser(@PathVariable("id") Long id, @RequestBody UserDTO userDTO) {
+    public UserDTO update(@PathVariable("id") Long id, @RequestBody UserDTO userDTO) {
         if (id == null || id < 1) {
             throw new UserException(DisplayKey.get("infox.user.update.id.error", id));
         }
 
         if (userDTO == null) {
-            throw new UserException("Usuário nulo");
+            throw new UserException("Somente campos nulos para atualizar");
         }
 
-        User user = UserUtil.fill(userDTO);
+        User user = userService.findById(id);
+        UserUtil.merge(userDTO, user);
+
         return save(user);
     }
 }

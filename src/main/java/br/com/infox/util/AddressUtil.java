@@ -22,4 +22,22 @@ public class AddressUtil {
 
         return dto;
     }
+
+    public static Address fill(AddressDTO addressDTO) {
+        Address address = new Address();
+
+        if (addressDTO != null) {
+            address.setCep(addressDTO.getCep());
+            address.setCity(addressDTO.getCity());
+            address.setComplement(addressDTO.getComplement());
+            address.setCountry(addressDTO.getCountry());
+            address.setId(addressDTO.getId());
+            address.setNeighborhood(addressDTO.getNeighborhood());
+            address.setNumber(addressDTO.getNumber());
+            address.setState(addressDTO.getState());
+            address.setStreet(addressDTO.getStreet());
+        }
+
+        return address;
+    }
 }

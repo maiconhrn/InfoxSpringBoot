@@ -14,7 +14,7 @@ public final class UserBuilder {
     private String cpf;
     private Long id;
     private String firstName;
-    private String login;
+    private String username;
     private String lastName;
     private String password;
     private String email;
@@ -44,8 +44,8 @@ public final class UserBuilder {
         return this;
     }
 
-    public UserBuilder withLogin(String login) {
-        this.login = login;
+    public UserBuilder withUsername(String login) {
+        this.username = login;
         return this;
     }
 
@@ -84,7 +84,7 @@ public final class UserBuilder {
         user.setCpf(cpf);
         user.setId(id);
         user.setFirstName(firstName);
-        user.setLogin(login);
+        user.setUsername(username);
         user.setLastName(lastName);
         user.setPassword(password);
         user.setEmail(email);

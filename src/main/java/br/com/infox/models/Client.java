@@ -14,7 +14,7 @@ public class Client extends Person implements Serializable {
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "endereco_id")
     private Address address;
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client")
     private List<ServiceOrder> serviceOrders;
 
     public String getPhone() {

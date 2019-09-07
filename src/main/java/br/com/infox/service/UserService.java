@@ -28,6 +28,14 @@ public class UserService {
                 new UserException(DisplayKey.get("infox.user.noneRegistredWithID", id)));
     }
 
+    public User saveUser(User user) {
+        if (user == null) {
+            throw new UserException("Could not save a null User Object");
+        }
+
+        return userRepository.save(user);
+    }
+
     public User addRole(Long id, Role role) {
         User user = findById(id);
 
@@ -42,5 +50,9 @@ public class UserService {
         roles.forEach(role -> user.getRoles().add(role));
 
         return userRepository.save(user);
+    }
+
+    public User login(String username, String password) {
+        return userRepository.login(username, password).orElse(null);
     }
 }

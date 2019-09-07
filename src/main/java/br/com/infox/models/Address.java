@@ -20,15 +20,15 @@ public class Address implements Serializable {
     private String state;
     @Column(length = 50, nullable = false)
     private String city;
-    @Column(length = 10, nullable = false)
+    @Column(length = 10)
     private String cep;
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String neighborhood;
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String street;
     @Column(length = 10, nullable = false)
     private String number;
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String complement;
 
     public Long getId() {
