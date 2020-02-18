@@ -1,7 +1,7 @@
 package br.com.infox.util;
 
 import br.com.infox.models.Address;
-import br.com.infox.webservice.dto.AddressDTO;
+import br.com.infox.api.dto.AddressDTO;
 
 /**
  * @author Maicon

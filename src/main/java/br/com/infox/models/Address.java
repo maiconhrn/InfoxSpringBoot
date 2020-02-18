@@ -30,6 +30,8 @@ public class Address implements Serializable {
     private String number;
     @Column(length = 50)
     private String complement;
+    @Column(nullable = false)
+    private Boolean retired = false;
 
     public Long getId() {
         return id;
@@ -103,6 +105,14 @@ public class Address implements Serializable {
         this.complement = complement;
     }
 
+    public Boolean getRetired() {
+        return retired;
+    }
+
+    public void setRetired(Boolean retired) {
+        this.retired = retired;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -116,11 +126,12 @@ public class Address implements Serializable {
                 Objects.equals(neighborhood, address.neighborhood) &&
                 Objects.equals(street, address.street) &&
                 Objects.equals(number, address.number) &&
-                Objects.equals(complement, address.complement);
+                Objects.equals(complement, address.complement) &&
+                Objects.equals(retired, address.retired);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, country, state, city, cep, neighborhood, street, number, complement);
+        return Objects.hash(id, country, state, city, cep, neighborhood, street, number, complement, retired);
     }
 }

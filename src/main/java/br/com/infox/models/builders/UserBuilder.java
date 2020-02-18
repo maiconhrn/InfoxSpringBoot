@@ -16,7 +16,6 @@ public final class UserBuilder {
     private String firstName;
     private String username;
     private String lastName;
-    private String password;
     private String email;
     private Date birthDate;
     private List<ServiceOrder> serviceOrders;
@@ -44,18 +43,13 @@ public final class UserBuilder {
         return this;
     }
 
-    public UserBuilder withUsername(String login) {
-        this.username = login;
+    public UserBuilder withUsername(String username) {
+        this.username = username;
         return this;
     }
 
     public UserBuilder withLastName(String lastName) {
         this.lastName = lastName;
-        return this;
-    }
-
-    public UserBuilder withPassword(String password) {
-        this.password = password;
         return this;
     }
 
@@ -86,7 +80,6 @@ public final class UserBuilder {
         user.setFirstName(firstName);
         user.setUsername(username);
         user.setLastName(lastName);
-        user.setPassword(password);
         user.setEmail(email);
         user.setBirthDate(birthDate);
         user.setServiceOrders(serviceOrders);

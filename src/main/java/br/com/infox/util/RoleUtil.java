@@ -1,7 +1,7 @@
 package br.com.infox.util;
 
 import br.com.infox.models.Role;
-import br.com.infox.webservice.dto.RoleDTO;
+import br.com.infox.api.dto.RoleDTO;
 
 /**
  * @author Maicon

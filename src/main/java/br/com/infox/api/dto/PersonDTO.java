@@ -1,16 +1,23 @@
-package br.com.infox.webservice.dto;
+package br.com.infox.api.dto;
 
+import org.springframework.hateoas.core.Relation;
+
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
  * @author Maicon
  */
+@Relation(collectionRelation = "persons")
 public class PersonDTO {
-
     private Long id;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
+    @NotNull
     private String cpf;
+    @NotNull
     private Date birthDate;
 
     public Long getId() {

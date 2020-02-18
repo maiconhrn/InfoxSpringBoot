@@ -1,13 +1,15 @@
-package br.com.infox.webservice.dto;
+package br.com.infox.api.dto;
 
 import br.com.infox.models.types.ServiceOrderType;
 import br.com.infox.models.types.ServiceOrderSituationType;
+import org.springframework.hateoas.core.Relation;
 
 import java.util.Date;
 
 /**
  * @author Maicon
  */
+@Relation(collectionRelation = "serviceOrders")
 public class ServiceOrderDTO {
     private Long id;
     private Date creationDate;

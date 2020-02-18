@@ -1,7 +1,9 @@
 package br.com.infox.util;
 
 import br.com.infox.models.ServiceOrder;
-import br.com.infox.webservice.dto.ServiceOrderDTO;
+import br.com.infox.api.dto.ServiceOrderDTO;
+
+import java.util.Date;
 
 /**
  * @author Maicon
@@ -23,6 +25,22 @@ public class ServiceOrderUtil {
         osDto.setValue(os.getValue());
 
         return osDto;
+    }
+
+    public static ServiceOrder fill(ServiceOrderDTO serviceOrderDTO) {
+        ServiceOrder serviceOrder = new ServiceOrder();
+
+        serviceOrder.setClient(ClientUtil.fill(serviceOrderDTO.getClient()));
+        serviceOrder.setCreationDate(new Date());
+        serviceOrder.setDefect(serviceOrderDTO.getDefect());
+        serviceOrder.setEquipament(serviceOrderDTO.getEquipament());
+        serviceOrder.setService(serviceOrderDTO.getService());
+        serviceOrder.setSituation(serviceOrderDTO.getSituation());
+        serviceOrder.setTechnician(UserUtil.fill(serviceOrderDTO.getTechnician()));
+        serviceOrder.setType(serviceOrderDTO.getType());
+        serviceOrder.setValue(serviceOrderDTO.getValue());
+
+        return serviceOrder;
     }
 
 }

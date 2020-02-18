@@ -1,16 +1,27 @@
-package br.com.infox.webservice.dto;
+package br.com.infox.api.dto;
+
+import org.springframework.hateoas.core.Relation;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Maicon
  */
+@Relation(value = "addresses")
 public class AddressDTO {
     private Long id;
+    @NotNull
     private String country;
+    @NotNull
     private String state;
+    @NotNull
     private String city;
+    @NotNull
     private String cep;
     private String neighborhood;
+    @NotNull
     private String street;
+    @NotNull
     private String number;
     private String complement;
 

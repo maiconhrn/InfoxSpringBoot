@@ -25,6 +25,8 @@ abstract class Person implements Serializable {
     @Column(name = "birty_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date birthDate;
+    @Column(nullable = false)
+    private Boolean retired = false;
 
     public Long getId() {
         return id;
@@ -66,6 +68,14 @@ abstract class Person implements Serializable {
         this.birthDate = birthDate;
     }
 
+    public Boolean getRetired() {
+        return retired;
+    }
+
+    public void setRetired(Boolean retired) {
+        this.retired = retired;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,11 +85,12 @@ abstract class Person implements Serializable {
                 Objects.equals(firstName, person.firstName) &&
                 Objects.equals(lastName, person.lastName) &&
                 Objects.equals(cpf, person.cpf) &&
-                Objects.equals(birthDate, person.birthDate);
+                Objects.equals(birthDate, person.birthDate) &&
+                Objects.equals(retired, person.retired);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, cpf, birthDate);
+        return Objects.hash(id, firstName, lastName, cpf, birthDate, retired);
     }
 }

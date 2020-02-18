@@ -1,8 +1,11 @@
-package br.com.infox.webservice.dto;
+package br.com.infox.api.dto;
+
+import org.springframework.hateoas.core.Relation;
 
 /**
  * @author Maicon
  */
+@Relation(collectionRelation = "roles")
 public class RoleDTO {
     private Long id;
     private String name;

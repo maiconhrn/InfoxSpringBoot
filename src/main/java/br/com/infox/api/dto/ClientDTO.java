@@ -1,10 +1,17 @@
-package br.com.infox.webservice.dto;
+package br.com.infox.api.dto;
+
+import org.springframework.hateoas.core.Relation;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Maicon
  */
-public class ClientDTO extends PersonDTO {
+@Relation(collectionRelation = "clients")
+public class ClientDTO extends @Valid PersonDTO {
     private String phone;
+    @NotNull @Valid
     private AddressDTO address;
 
     public String getPhone() {

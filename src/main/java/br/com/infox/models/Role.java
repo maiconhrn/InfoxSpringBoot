@@ -22,6 +22,7 @@ public class Role implements Serializable {
     @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
     private List<User> users;
 
+
     public Long getId() {
         return id;
     }

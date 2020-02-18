@@ -11,11 +11,9 @@ public class User extends Person implements Serializable {
 
     @Column(length = 30, unique = true, nullable = false)
     private String username;
-    @Transient
-    private String password;
     @Column(nullable = false)
     private String hashPassword;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
     @OneToMany(mappedBy = "technician", cascade = CascadeType.ALL)
     private List<ServiceOrder> serviceOrders;
@@ -28,6 +26,8 @@ public class User extends Person implements Serializable {
                     @JoinColumn(name = "role_id", nullable = false)
             })
     private List<Role> roles;
+    @Column(nullable = false)
+    private Boolean retired = false;
 
     public String getUsername() {
         return username;
@@ -35,14 +35,6 @@ public class User extends Person implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getHashPassword() {
@@ -78,20 +70,30 @@ public class User extends Person implements Serializable {
     }
 
     @Override
+    public Boolean getRetired() {
+        return retired;
+    }
+
+    @Override
+    public void setRetired(Boolean retired) {
+        this.retired = retired;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         User user = (User) o;
         return Objects.equals(username, user.username) &&
-                Objects.equals(password, user.password) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(serviceOrders, user.serviceOrders) &&
-                Objects.equals(roles, user.roles);
+                Objects.equals(roles, user.roles) &&
+                Objects.equals(retired, user.retired);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), username, password, email, serviceOrders, roles);
+        return Objects.hash(super.hashCode(), username, email, serviceOrders, roles, retired);
     }
 }

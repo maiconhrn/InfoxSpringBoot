@@ -16,6 +16,8 @@ public class Client extends Person implements Serializable {
     private Address address;
     @OneToMany(mappedBy = "client")
     private List<ServiceOrder> serviceOrders;
+    @Column(nullable = false)
+    private Boolean retired = false;
 
     public String getPhone() {
         return phone;
@@ -41,6 +43,14 @@ public class Client extends Person implements Serializable {
         this.serviceOrders = serviceOrders;
     }
 
+    public Boolean getRetired() {
+        return retired;
+    }
+
+    public void setRetired(Boolean retired) {
+        this.retired = retired;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,11 +59,12 @@ public class Client extends Person implements Serializable {
         Client client = (Client) o;
         return Objects.equals(phone, client.phone) &&
                 Objects.equals(address, client.address) &&
-                Objects.equals(serviceOrders, client.serviceOrders);
+                Objects.equals(serviceOrders, client.serviceOrders) &&
+                Objects.equals(retired, client.retired);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), phone, address, serviceOrders);
+        return Objects.hash(super.hashCode(), phone, address, serviceOrders, retired);
     }
 }

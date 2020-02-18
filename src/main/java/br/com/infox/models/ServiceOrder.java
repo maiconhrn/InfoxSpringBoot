@@ -2,7 +2,6 @@ package br.com.infox.models;
 
 import br.com.infox.models.types.ServiceOrderSituationType;
 import br.com.infox.models.types.ServiceOrderType;
-import org.dom4j.tree.AbstractEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "service_order")
-public class ServiceOrder extends AbstractEntity implements Serializable {
+public class ServiceOrder implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,6 +38,8 @@ public class ServiceOrder extends AbstractEntity implements Serializable {
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "technician_id")
     private User technician;
+    @Column(nullable = false)
+    private Boolean retired = false;
 
     public Long getId() {
         return id;
@@ -120,6 +121,14 @@ public class ServiceOrder extends AbstractEntity implements Serializable {
         this.technician = technician;
     }
 
+    public Boolean getRetired() {
+        return retired;
+    }
+
+    public void setRetired(Boolean retired) {
+        this.retired = retired;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -134,11 +143,12 @@ public class ServiceOrder extends AbstractEntity implements Serializable {
                 Objects.equals(service, that.service) &&
                 Objects.equals(value, that.value) &&
                 Objects.equals(client, that.client) &&
-                Objects.equals(technician, that.technician);
+                Objects.equals(technician, that.technician) &&
+                Objects.equals(retired, that.retired);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, creationDate, type, situation, equipament, defect, service, value, client, technician);
+        return Objects.hash(id, creationDate, type, situation, equipament, defect, service, value, client, technician, retired);
     }
 }
