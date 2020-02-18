@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import static br.com.infox.util.BeanUtil.copyNonNullProperties;
-
 /**
  * @author Maicon
  */
@@ -39,19 +37,6 @@ public class UserController {
     public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
-    }
-
-    private UserDTO save(User user) {
-        if (user != null) {
-            try {
-                user = userService.saveUser(user);
-                return UserUtil.toDto(user);
-            } catch (Exception e) {
-                throw new UserException(DisplayKey.get("infox.user.add.error") + e.getMessage());
-            }
-        }
-
-        return new UserDTO();
     }
 
     @GetMapping
@@ -86,15 +71,7 @@ public class UserController {
     @PutMapping(value = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> update(@PathVariable("userId") @NotNull Long userId,
                                           @NotNull @Valid @RequestBody UserDTO userDTO) {
-        User userToUpdate = userService.findById(userId);
-
-        if (userToUpdate == null) {
-            throw new UserException("Client with id: " + userId + " not found");
-        }
-
-        User userWithNewValues = UserUtil.fill(userDTO);
-        copyNonNullProperties(userWithNewValues, userToUpdate);
-
-        return new ResponseEntity<>(save(userToUpdate), HttpStatus.OK);
+        User userUpdated = userService.update(userId, UserUtil.fill(userDTO));
+        return new ResponseEntity<>(UserUtil.toDto(userUpdated), HttpStatus.OK);
     }
 }

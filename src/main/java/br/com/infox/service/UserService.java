@@ -1,7 +1,6 @@
 package br.com.infox.service;
 
 import br.com.infox.api.dto.AuthRequestDTO;
-import br.com.infox.displaykey.DisplayKey;
 import br.com.infox.exceptions.UserException;
 import br.com.infox.models.Role;
 import br.com.infox.models.User;
@@ -19,6 +18,8 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import static br.com.infox.util.BeanUtil.copyNonNullProperties;
+
 /**
  * @author Maicon
  */
@@ -35,7 +36,7 @@ public class UserService implements UserDetailsService {
 
     public User findById(@NotNull Long id) {
         return userRepository.findById(id).orElseThrow(() ->
-                new UserException(DisplayKey.get("infox.user.noneRegistredWithID", id)));
+                new UserException("User with id: " + id + " not found"));
     }
 
     public User saveUser(@NotNull User user) {
@@ -69,13 +70,33 @@ public class UserService implements UserDetailsService {
 
     public User registerNewUser(User user, AuthRequestDTO authRequestDTO) {
         if (userExists(authRequestDTO.getUsername())) {
-            throw new UserException("There is an account with that email adress:"
+            throw new UserException("There is an account with that username:"
                     + authRequestDTO.getUsername());
         }
 
         user.setHashPassword(passwordEncoder.encode(authRequestDTO.getPassword()));
 
         return userRepository.save(user);
+    }
+
+    public User update(User userToUpdate, User userWithNewValues) {
+        if (userToUpdate == null || userWithNewValues == null) {
+            throw new UserException("User object cant be null");
+        }
+
+        copyNonNullProperties(userWithNewValues, userToUpdate);
+
+        return userRepository.save(userToUpdate);
+    }
+
+    public User update(Long userId, User userWithNewValues) {
+        User userToUpdate = findById(userId);
+
+        if (userToUpdate == null) {
+            throw new UserException("User with id: " + userId + " not found");
+        }
+
+        return update(userToUpdate, userWithNewValues);
     }
 
     //    private void checkGrantAuthorities(User user, List<GrantedAuthority> listGrantAuthority) {

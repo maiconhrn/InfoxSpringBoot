@@ -24,10 +24,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import javax.validation.*;
 import javax.validation.constraints.NotNull;
-
-import static br.com.infox.util.BeanUtil.copyNonNullProperties;
+import java.util.Set;
 
 /**
  * @author Maicon
@@ -94,18 +93,16 @@ public class ServiceOrderController {
     }
 
     @PutMapping("/{serviceOrderId}/client")
-    public ResponseEntity<ClientDTO> updateClient(@NotNull @PathVariable Long serviceOrderId, @NotNull @Valid @RequestBody ClientDTO clientDTO) {
+    public ResponseEntity<ClientDTO> updateClient(@NotNull @PathVariable Long serviceOrderId,
+                                                  @NotNull @Valid @RequestBody ClientDTO clientDTO) {
         ServiceOrder serviceOrder = serviceOrderService.findById(serviceOrderId);
 
         if (serviceOrder == null) {
             throw new ServiceOrderException("Service Order with id: " + serviceOrderId + " not found");
         }
 
-        Client clientToUpdate = serviceOrder.getClient();
-        Client clientWithNewValues = ClientUtil.fill(clientDTO);
-        copyNonNullProperties(clientWithNewValues, clientToUpdate);
-
-        return new ResponseEntity<>(ClientUtil.toDto(clientService.saveClient(clientToUpdate)), HttpStatus.OK);
+        Client clientUpdated = clientService.update(serviceOrder.getClient(), ClientUtil.fill(clientDTO));
+        return new ResponseEntity<>(ClientUtil.toDto(clientUpdated), HttpStatus.OK);
     }
 
     @GetMapping("/{serviceOrderId}/technician")
@@ -120,18 +117,16 @@ public class ServiceOrderController {
     }
 
     @PutMapping("/{serviceOrderId}/technician")
-    public ResponseEntity<UserDTO> updateUser(@NotNull @PathVariable Long serviceOrderId, @NotNull @Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@NotNull @PathVariable Long serviceOrderId,
+                                              @NotNull @Valid @RequestBody UserDTO userDTO) {
         ServiceOrder serviceOrder = serviceOrderService.findById(serviceOrderId);
 
         if (serviceOrder == null) {
             throw new ServiceOrderException("Service Order with id: " + serviceOrderId + " not found");
         }
 
-        User userToUpdate = serviceOrder.getTechnician();
-        User userWithNewValues = UserUtil.fill(userDTO);
-        copyNonNullProperties(userWithNewValues, userToUpdate);
-
-        return new ResponseEntity<>(UserUtil.toDto(userService.saveUser(userToUpdate)), HttpStatus.OK);
+        User userUpdated = userService.update(serviceOrder.getTechnician(), UserUtil.fill(userDTO));
+        return new ResponseEntity<>(UserUtil.toDto(userUpdated), HttpStatus.OK);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

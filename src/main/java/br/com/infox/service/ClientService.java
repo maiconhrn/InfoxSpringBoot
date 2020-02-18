@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 
+import static br.com.infox.util.BeanUtil.copyNonNullProperties;
+
 /**
  * @author Maicon
  */
@@ -31,11 +33,31 @@ public class ClientService {
 
     public Client findById(@NotNull Long id) {
         return clientRepository.findById(id).orElseThrow(() ->
-                new ClientException("No client found with ID: " + id));
+                new ClientException("Client with id: " + id + " not found"));
     }
 
     public Address findAddressByClientId(@NotNull Long clientId) {
         return clientRepository.findAddressByClientId(clientId)
                 .orElseThrow(() -> new ClientException("Client with ID: " + clientId + " no found"));
+    }
+
+    public Client update(Client clientToUpdate, Client clientWithNewValues) {
+        if (clientToUpdate == null || clientWithNewValues == null) {
+            throw new ClientException("Client object cant be null");
+        }
+
+        copyNonNullProperties(clientWithNewValues, clientToUpdate);
+
+        return clientRepository.save(clientToUpdate);
+    }
+
+    public Client update(Long clientId, Client clientWithNewValues) {
+        Client clientToUpdate = findById(clientId);
+
+        if (clientToUpdate == null) {
+            throw new ClientException("Client with id: " + clientId + " not found");
+        }
+
+        return update(clientToUpdate, clientWithNewValues);
     }
 }

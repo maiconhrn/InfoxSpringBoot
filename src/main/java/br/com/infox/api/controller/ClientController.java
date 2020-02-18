@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import static br.com.infox.util.BeanUtil.copyNonNullProperties;
-
 /**
  * @author Maicon
  */
@@ -80,15 +78,7 @@ public class ClientController {
 
     @PutMapping(path = "/{clientId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClientDTO> update(@NotNull @PathVariable("clientId") Long clientId, @NotNull @Valid @RequestBody ClientDTO clientDTO) {
-        Client clientToUpdate = clientService.findById(clientId);
-
-        if (clientToUpdate == null) {
-            throw new ClientException("Client with id: " + clientId + " not found");
-        }
-
-        Client clientWithNewValues = ClientUtil.fill(clientDTO);
-        copyNonNullProperties(clientWithNewValues, clientToUpdate);
-
-        return new ResponseEntity<>(save(clientToUpdate), HttpStatus.OK);
+        Client clientUpdated = clientService.update(clientId, ClientUtil.fill(clientDTO));
+        return new ResponseEntity<>(ClientUtil.toDto(clientUpdated), HttpStatus.OK);
     }
 }
