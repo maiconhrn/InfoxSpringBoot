@@ -10,8 +10,8 @@
     </parent>
     <groupId>br.com.infox</groupId>
     <artifactId>infox</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
     <name>infox</name>
     <description>InfoX with Spring Boot</description>
 

@@ -1,0 +1,38 @@
+version: "3.7"
+services:
+  db:
+    image: mysql:8
+    container_name: mysql-container
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db/data:/var/lib/mysql
+    networks:
+      - infox
+    environment:
+      MYSQL_ROOT_PASSWORD: Coxinha123
+      MYSQL_DATABASE: infox
+      MYSQL_ROOT_HOST: '%'
+
+  api:
+    container_name: spring-boot-container
+    ports:
+      - "8080:8080"
+      - "8000:8000"
+    build:
+      context: .
+      dockerfile: src/Docker/debug.Dockerfile
+    restart: always
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/infox?useSSL=false&useTimezone=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Coxinha123
+    networks:
+      - infox
+
+networks:
+  infox:
