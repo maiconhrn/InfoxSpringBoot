@@ -2,6 +2,7 @@ package br.com.infox.api.controller;
 
 import br.com.infox.api.dto.AuthRequestDTO;
 import br.com.infox.api.dto.AuthResponseDTO;
+import br.com.infox.exceptions.AuthException;
 import br.com.infox.service.UserService;
 import br.com.infox.util.JwtTokenUtil;
 import org.springframework.http.HttpStatus;
@@ -33,23 +34,23 @@ public class JwtAuthenticationController {
         this.userService = userService;
     }
 
-    private void authenticate(String username, String password) throws Exception {
+    private void authenticate(String username, String password) throws AuthException {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
+            throw new AuthException("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
+            throw new AuthException("INVALID_CREDENTIALS", e);
         }
     }
 
     @PostMapping(value = "/authenticate")
-    public ResponseEntity<AuthResponseDTO> createAuthenticationToken(@NotNull @Valid @RequestBody AuthRequestDTO authRequestDTO) throws Exception {
+    public ResponseEntity<AuthResponseDTO> createAuthenticationToken(@NotNull @Valid @RequestBody AuthRequestDTO authRequestDTO) {
         authenticate(authRequestDTO.getUsername(), authRequestDTO.getPassword());
         UserDetails userDetails = userService.loadUserByUsername(authRequestDTO.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
         AuthResponseDTO authResponseDTO = new AuthResponseDTO();
         authResponseDTO.setToken(token);
-        return new ResponseEntity<>(authResponseDTO, HttpStatus.OK);
+        return new ResponseEntity<>(authResponseDTO, HttpStatus.CREATED);
     }
 }

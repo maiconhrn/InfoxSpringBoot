@@ -24,9 +24,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 /**
  * @author Maicon
@@ -60,6 +59,12 @@ public class ServiceOrderController {
         return new ServiceOrderDTO();
     }
 
+    private void assertNotNull(Object o, String nullMessage) throws ServiceOrderException {
+        if (o == null) {
+            throw new ServiceOrderException(nullMessage);
+        }
+    }
+
     @GetMapping
     public ResponseEntity<PagedResources<Resource<ServiceOrderDTO>>> listAll(
             Pageable pageable, PagedResourcesAssembler<ServiceOrderDTO> assembler) {
@@ -73,10 +78,7 @@ public class ServiceOrderController {
     @GetMapping("/{serviceOrderId}")
     public ResponseEntity<ServiceOrderDTO> getById(@NotNull @PathVariable Long serviceOrderId) {
         ServiceOrder serviceOrder = serviceOrderService.findById(serviceOrderId);
-
-        if (serviceOrder == null) {
-            throw new ServiceOrderException("Service Order with id: " + serviceOrderId + " not found");
-        }
+        assertNotNull(serviceOrder, "Service Order with id: " + serviceOrderId + " not found");
 
         return new ResponseEntity<>(ServiceOrderUtil.toDto(serviceOrder), HttpStatus.OK);
     }
@@ -84,10 +86,7 @@ public class ServiceOrderController {
     @GetMapping("/{serviceOrderId}/client")
     public ResponseEntity<ClientDTO> getClient(@NotNull @PathVariable Long serviceOrderId) {
         ServiceOrder serviceOrder = serviceOrderService.findById(serviceOrderId);
-
-        if (serviceOrder == null) {
-            throw new ServiceOrderException("Service Order with id: " + serviceOrderId + " not found");
-        }
+        assertNotNull(serviceOrder, "Service Order with id: " + serviceOrderId + " not found");
 
         return new ResponseEntity<>(ClientUtil.toDto(serviceOrder.getClient()), HttpStatus.OK);
     }
@@ -96,10 +95,7 @@ public class ServiceOrderController {
     public ResponseEntity<ClientDTO> updateClient(@NotNull @PathVariable Long serviceOrderId,
                                                   @NotNull @Valid @RequestBody ClientDTO clientDTO) {
         ServiceOrder serviceOrder = serviceOrderService.findById(serviceOrderId);
-
-        if (serviceOrder == null) {
-            throw new ServiceOrderException("Service Order with id: " + serviceOrderId + " not found");
-        }
+        assertNotNull(serviceOrder, "Service Order with id: " + serviceOrderId + " not found");
 
         Client clientUpdated = clientService.update(serviceOrder.getClient(), ClientUtil.fill(clientDTO));
         return new ResponseEntity<>(ClientUtil.toDto(clientUpdated), HttpStatus.OK);
@@ -108,10 +104,7 @@ public class ServiceOrderController {
     @GetMapping("/{serviceOrderId}/technician")
     public ResponseEntity<UserDTO> getUser(@NotNull @PathVariable Long serviceOrderId) {
         ServiceOrder serviceOrder = serviceOrderService.findById(serviceOrderId);
-
-        if (serviceOrder == null) {
-            throw new ServiceOrderException("Service Order with id: " + serviceOrderId + " not found");
-        }
+        assertNotNull(serviceOrder, "Service Order with id: " + serviceOrderId + " not found");
 
         return new ResponseEntity<>(UserUtil.toDto(serviceOrder.getTechnician()), HttpStatus.OK);
     }
@@ -120,10 +113,7 @@ public class ServiceOrderController {
     public ResponseEntity<UserDTO> updateUser(@NotNull @PathVariable Long serviceOrderId,
                                               @NotNull @Valid @RequestBody UserDTO userDTO) {
         ServiceOrder serviceOrder = serviceOrderService.findById(serviceOrderId);
-
-        if (serviceOrder == null) {
-            throw new ServiceOrderException("Service Order with id: " + serviceOrderId + " not found");
-        }
+        assertNotNull(serviceOrder, "Service Order with id: " + serviceOrderId + " not found");
 
         User userUpdated = userService.update(serviceOrder.getTechnician(), UserUtil.fill(userDTO));
         return new ResponseEntity<>(UserUtil.toDto(userUpdated), HttpStatus.OK);
@@ -133,6 +123,6 @@ public class ServiceOrderController {
     public ResponseEntity<ServiceOrderDTO> register(@NotNull @Valid @RequestBody ServiceOrderDTO serviceOrderDTO) {
         ServiceOrder serviceOrder = ServiceOrderUtil.fill(serviceOrderDTO);
 
-        return new ResponseEntity<>(save(serviceOrder), HttpStatus.OK);
+        return new ResponseEntity<>(save(serviceOrder), HttpStatus.CREATED);
     }
 }

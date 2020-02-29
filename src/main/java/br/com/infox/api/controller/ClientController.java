@@ -73,7 +73,7 @@ public class ClientController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClientDTO> register(@NotNull @Valid @RequestBody ClientDTO clientDTO) {
         Client user = ClientUtil.fill(clientDTO);
-        return new ResponseEntity<>(save(user), HttpStatus.OK);
+        return new ResponseEntity<>(save(user), HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/{clientId}", consumes = MediaType.APPLICATION_JSON_VALUE)

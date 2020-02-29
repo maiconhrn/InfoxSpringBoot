@@ -18,7 +18,7 @@ public final class ClientBuilder {
     private List<ServiceOrder> serviceOrders;
     private String lastName;
     private String cpf;
-    private Date birtyDate;
+    private Date birthDate;
 
     private ClientBuilder() {
     }
@@ -62,8 +62,8 @@ public final class ClientBuilder {
         return this;
     }
 
-    public ClientBuilder withBirtyDate(Date birtyDate) {
-        this.birtyDate = birtyDate;
+    public ClientBuilder withBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
         return this;
     }
 
@@ -76,7 +76,7 @@ public final class ClientBuilder {
         client.setServiceOrders(serviceOrders);
         client.setLastName(lastName);
         client.setCpf(cpf);
-        client.setBirthDate(birtyDate);
+        client.setBirthDate(birthDate);
         return client;
     }
 }

@@ -8,9 +8,6 @@ public class SignupDataDTO {
     private UserDTO user;
     private AuthRequestDTO auth;
 
-    public SignupDataDTO() {
-    }
-
     public UserDTO getUser() {
         return user;
     }

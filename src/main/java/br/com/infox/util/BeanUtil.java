@@ -12,6 +12,11 @@ import java.util.Set;
  * @author Maicon
  */
 public class BeanUtil {
+
+    private BeanUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
     private static String[] getNullPropertyNames(Object source) {
         final BeanWrapper src = new BeanWrapperImpl(source);
         PropertyDescriptor[] pds = src.getPropertyDescriptors();

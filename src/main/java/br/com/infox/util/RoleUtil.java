@@ -1,12 +1,16 @@
 package br.com.infox.util;
 
-import br.com.infox.models.Role;
 import br.com.infox.api.dto.RoleDTO;
+import br.com.infox.models.Role;
 
 /**
  * @author Maicon
  */
 public class RoleUtil {
+
+    private RoleUtil() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static RoleDTO toDto(Role role) {
         RoleDTO dto = new RoleDTO();

@@ -11,9 +11,6 @@ public class AuthRequestDTO {
     @NotNull
     private String password;
 
-    public AuthRequestDTO() {
-    }
-
     public String getUsername() {
         return this.username;
     }

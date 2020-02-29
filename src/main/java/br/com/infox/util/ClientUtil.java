@@ -8,6 +8,10 @@ import br.com.infox.models.Client;
  */
 public class ClientUtil {
 
+    private ClientUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static ClientDTO toDto(Client client) {
         ClientDTO clientDTO = new ClientDTO();
 

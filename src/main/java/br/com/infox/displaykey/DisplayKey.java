@@ -2,6 +2,7 @@ package br.com.infox.displaykey;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Properties;
 
 /**
@@ -12,6 +13,10 @@ public class DisplayKey {
 
     private static String url;
     private static Properties properties;
+
+    private DisplayKey() {
+        throw new IllegalStateException("Utility class");
+    }
 
     private static void setUrl(String idioma) {
         switch (idioma) {
@@ -27,7 +32,7 @@ public class DisplayKey {
         try {
             properties.load(DisplayKey.class.getResourceAsStream(url));
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.err.println(Arrays.toString(ex.getStackTrace()));
         }
     }
 

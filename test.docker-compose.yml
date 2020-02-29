@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  api:
+    container_name: spring-boot-container
+    ports:
+      - "8080:8080"
+    build:
+      context: .
+      dockerfile: src/Docker/test.Dockerfile
+    restart: always
+    networks:
+      - infox
+
+networks:
+  infox:

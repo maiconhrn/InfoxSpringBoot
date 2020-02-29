@@ -15,6 +15,7 @@ public final class UserBuilder {
     private Long id;
     private String firstName;
     private String username;
+    private String hashPassword;
     private String lastName;
     private String email;
     private Date birthDate;
@@ -45,6 +46,12 @@ public final class UserBuilder {
 
     public UserBuilder withUsername(String username) {
         this.username = username;
+        return this;
+    }
+
+
+    public UserBuilder withHashPassword(String hashPassword) {
+        this.hashPassword = hashPassword;
         return this;
     }
 
@@ -79,6 +86,7 @@ public final class UserBuilder {
         user.setId(id);
         user.setFirstName(firstName);
         user.setUsername(username);
+        user.setHashPassword(hashPassword);
         user.setLastName(lastName);
         user.setEmail(email);
         user.setBirthDate(birthDate);

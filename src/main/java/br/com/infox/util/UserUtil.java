@@ -14,6 +14,10 @@ import java.util.List;
  */
 public class UserUtil {
 
+    private UserUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static User createUsuario() {
         return new User();
     }
@@ -25,9 +29,7 @@ public class UserUtil {
     private static List<RoleDTO> toDto(List<Role> roles) {
         List<RoleDTO> rolesDTO = new ArrayList<>();
 
-        roles.forEach(role -> {
-            rolesDTO.add(RoleUtil.toDto(role));
-        });
+        roles.forEach(role -> rolesDTO.add(RoleUtil.toDto(role)));
 
         return rolesDTO;
     }
@@ -35,9 +37,7 @@ public class UserUtil {
     private static List<Role> fill(List<RoleDTO> rolesDTO) {
         List<Role> roles = new ArrayList<>();
 
-        rolesDTO.forEach(roleDTO -> {
-            roles.add(RoleUtil.fill(roleDTO));
-        });
+        rolesDTO.forEach(roleDTO -> roles.add(RoleUtil.fill(roleDTO)));
 
         return roles;
     }

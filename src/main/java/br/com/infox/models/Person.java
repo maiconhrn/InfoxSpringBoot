@@ -22,7 +22,7 @@ abstract class Person implements Serializable {
     private String lastName;
     @Column(length = 15, unique = true, nullable = false)
     private String cpf;
-    @Column(name = "birty_date", nullable = false)
+    @Column(name = "birth_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date birthDate;
     @Column(nullable = false)

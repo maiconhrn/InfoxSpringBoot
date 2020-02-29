@@ -1,12 +1,17 @@
 package br.com.infox.util;
 
-import br.com.infox.models.Address;
 import br.com.infox.api.dto.AddressDTO;
+import br.com.infox.models.Address;
 
 /**
  * @author Maicon
  */
 public class AddressUtil {
+
+    private AddressUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static AddressDTO toDto(Address address) {
         AddressDTO dto = new AddressDTO();
 

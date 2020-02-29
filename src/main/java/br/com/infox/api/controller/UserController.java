@@ -3,7 +3,6 @@ package br.com.infox.api.controller;
 import br.com.infox.api.dto.AuthRequestDTO;
 import br.com.infox.api.dto.SignupDataDTO;
 import br.com.infox.api.dto.UserDTO;
-import br.com.infox.displaykey.DisplayKey;
 import br.com.infox.exceptions.UserException;
 import br.com.infox.models.User;
 import br.com.infox.repository.UserRepository;
@@ -54,7 +53,7 @@ public class UserController {
         User user = userService.findById(userId);
 
         if (user == null) {
-            throw new UserException(DisplayKey.get("infox.user.noneRegistredWithID", userId));
+            throw new UserException("User with id: " + userId + " not found");
         }
 
         return new ResponseEntity<>(UserUtil.toDto(user), HttpStatus.OK);
@@ -65,7 +64,7 @@ public class UserController {
         User user = UserUtil.fill(signupDataDTO.getUser());
         AuthRequestDTO authRequestDTO = signupDataDTO.getAuth();
 
-        return new ResponseEntity<>(UserUtil.toDto(userService.registerNewUser(user, authRequestDTO)), HttpStatus.OK);
+        return new ResponseEntity<>(UserUtil.toDto(userService.registerNewUser(user, authRequestDTO)), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)

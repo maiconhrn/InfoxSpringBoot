@@ -1,7 +1,7 @@
 package br.com.infox.util;
 
-import br.com.infox.models.ServiceOrder;
 import br.com.infox.api.dto.ServiceOrderDTO;
+import br.com.infox.models.ServiceOrder;
 
 import java.util.Date;
 
@@ -9,6 +9,10 @@ import java.util.Date;
  * @author Maicon
  */
 public class ServiceOrderUtil {
+
+    private ServiceOrderUtil() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static ServiceOrderDTO toDto(ServiceOrder os) {
         ServiceOrderDTO osDto = new ServiceOrderDTO();
