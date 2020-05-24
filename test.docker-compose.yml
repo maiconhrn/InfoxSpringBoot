@@ -7,10 +7,12 @@ services:
       - "8080:8080"
     build:
       context: .
-      dockerfile: src/Docker/test.Dockerfile
+      dockerfile: /docker/test.Dockerfile
     restart: always
     networks:
       - infox
+    volumes:
+      - "./src:/app/src"
 
 networks:
   infox:
