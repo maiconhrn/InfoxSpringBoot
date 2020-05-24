@@ -1,1 +1,33 @@
-./db
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+.scannerwork/
+.vscode/
+sonar-project.properties
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/build/
+
+### GIT ###
+.git/
+*/.git/
+
+target/
+*/target/
+db/

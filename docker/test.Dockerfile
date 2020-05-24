@@ -4,24 +4,16 @@ FROM openjdk:8-jdk-alpine as build
 # Set the current working directory inside the image
 WORKDIR /app
 
-# Copy maven executable to the image
-COPY mvnw .
-COPY .mvn .mvn
-
-# Copy the pom.xml file
-COPY pom.xml .
+# Copy the project source
+COPY . .
 
 # For Docker in Windows
 RUN dos2unix mvnw
-# For Docker in Windows
 
 # Build all the dependencies in preparation to go offline.
 # This is a separate step so the dependencies will be cached unless
 # the pom.xml file has changed.
-RUN ./mvnw dependency:go-offline -B
-
-# Copy the project source
-COPY src src
+RUN ./mvnw compile dependency:go-offline -B
 
 # Package the application
 RUN ./mvnw clean install

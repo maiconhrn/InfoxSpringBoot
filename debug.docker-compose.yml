@@ -24,7 +24,7 @@ services:
       - "8000:8000"
     build:
       context: .
-      dockerfile: /docker/debug.Dockerfile
+      dockerfile: docker/debug.Dockerfile
     restart: always
     depends_on:
       - db
